@@ -1,9 +1,11 @@
 // Setup basic express server
 const express = require('express');
-const cors = require('cors');
 const app = express();
-app.use(cors());
-const server = require('http').createServer(app);
+const server = require('http').createServer(app, {
+  cors: {
+    origin: false,
+  }
+});
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
