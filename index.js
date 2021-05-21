@@ -1,15 +1,24 @@
 // Setup basic express server
 const express = require('express');
+const controller = require('./controller');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', (req, res) => res.send('Server is running'));
+
+// DB Test
+app.get('/terms', controller.get);
+app.post('/terms', controller.create);
 
 // Chatroom
 let numUsers = 0;
