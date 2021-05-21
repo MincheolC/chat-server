@@ -1,5 +1,6 @@
 // Setup basic express server
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -9,6 +10,7 @@ server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
+app.use(cors());
 app.get('/', (req, res) => res.send('Server is running'));
 
 // Chatroom
