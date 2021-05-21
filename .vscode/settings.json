@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/5adc0101-96bc-4b74-af9a-ff40ee858384/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/print-chat-app-test",
+  "appService.deploySubpath": "."
+}
