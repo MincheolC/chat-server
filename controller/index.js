@@ -1,5 +1,6 @@
 const model = require('../model');
 const cache = require('../helper/cache');
+const { updateCache, deleteCache } = require('../helper/util');
 
 function get(req, res) {
   const terms = cache.get('terms');
@@ -11,7 +12,7 @@ function get(req, res) {
     if (err) {
       return res.status(500).end();
     }
-    cache.set('terms', result.rows);
+    updateCache(result.rows);
     return res.send(result.rows);
   });
 }
@@ -23,7 +24,7 @@ function create(req, res) {
     if (err) {
       return res.status(500).end();
     }
-    cache.del('terms');
+    deleteCache('terms');
     return res.status(200).end();
   });
 }
@@ -34,7 +35,7 @@ function update(req, res) {
     if (err) {
       return res.status(500).end();
     }
-    cache.del('terms');
+    deleteCache('terms');
     return res.status(200).end();
   });
 }

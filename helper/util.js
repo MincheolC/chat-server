@@ -28,10 +28,28 @@ function arrayToObj(terms) {
   return obj;
 }
 
+function updateCache(terms) {
+  const combinedWords = getCombinedWords(terms);
+
+  cache.set('terms', terms);
+  cache.set('fTerms', arrayToObj(terms));
+  cache.set('cfTerms', arrayToObj(combinedWords));
+
+  console.log(cache.get('terms'))
+  console.log(cache.get('fTerms'))
+  console.log(cache.get('cfTerms'))
+}
+
+function deleteCache(key) {
+  cache.del(key);
+}
+
 module.exports = {
   parseWords,
   singularize,
   getSingularizedWords,
   getCombinedWords,
   arrayToObj,
+  updateCache,
+  deleteCache,
 };
