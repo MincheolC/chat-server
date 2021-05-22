@@ -1,7 +1,6 @@
 const pluralize = require('pluralize');
 const cache = require('./cache');
 const model = require('../model');
-const { get } = require('./cache');
 
 function parseWords(str) {
   const regexWords = /([a-zA-Z0-9]+)/g
