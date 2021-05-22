@@ -1,5 +1,6 @@
 // Setup basic express server
 const express = require('express');
+const morgan = require('morgan');
 const controller = require('./controller');
 const app = express();
 const server = require('http').createServer(app);
@@ -11,6 +12,7 @@ server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
+app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
