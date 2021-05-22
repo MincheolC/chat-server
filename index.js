@@ -5,6 +5,7 @@ const controller = require('./controller');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const { getDesc } = require('./helper/util')
 
 const port = process.env.PORT || 3000;
 
@@ -32,10 +33,19 @@ io.on('connection', (socket) => {
   // when the client emits 'new message', this listens and executes
   socket.on('new message', (data) => {
     // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data,
-    });
+    getDesc(data.message, (descriptions) => {
+      socket.emit('new message', {
+        username: socket.username,
+        message: data,
+        descriptions,
+      });
+      socket.broadcast.emit('new message', {
+        username: socket.username,
+        message: data,
+        descriptions,
+      });
+    })
+
   });
 
   // when the client emits 'add user', this listens and executes
