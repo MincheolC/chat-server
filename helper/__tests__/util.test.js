@@ -1,6 +1,6 @@
 const { parseWords, singularize, getSingularizedWords } = require('../util');
 
-describe('getWords', () => {
+describe('parseWords', () => {
   it('valid', () => {
     const strings = [
       'hello world',
@@ -8,7 +8,7 @@ describe('getWords', () => {
       'We provided a "special" gift - digital coupons - for you guys!',
       'How (are) u?😀',
       'print();',
-      '1 + 2 * 4 / 5 % 2 - 1 = ?'
+      '1 + 2 * 4 / 5 % 2 - 1 = ?',
     ];
     const result = [
       ['hello', 'world'],
@@ -21,7 +21,7 @@ describe('getWords', () => {
     strings.forEach((str, index) => {
       expect(parseWords(str)).toEqual(result[index]);
     });
-  })
+  });
 });
 
 describe('singularize', () => {
