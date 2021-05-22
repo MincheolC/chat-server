@@ -32,6 +32,7 @@ io.on('connection', (socket) => {
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', (data) => {
+    console.log('new message');
     // we tell the client to execute 'new message'
     getDesc(data.message, (descriptions) => {
       console.log(descriptions);
@@ -83,6 +84,7 @@ io.on('connection', (socket) => {
 
   // when the user disconnects.. perform this
   socket.on('disconnect', () => {
+    console.log('disconnected')
     if (addedUser) {
       --numUsers;
 

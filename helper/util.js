@@ -46,6 +46,7 @@ function updateCache(terms, callback) {
     cache.set('terms', terms);
     cache.set('fTerms', arrayToObj(terms));
     cache.set('cfTerms', combinedWords);
+    callback(null, terms);
   }
 }
 
