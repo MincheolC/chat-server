@@ -39,11 +39,11 @@ function postData() {
     async.eachSeries(result, (data, next) => {
       axios({
         method: 'post',
-        url: 'https://print-chat-app-test.azurewebsites.net/terms',
+        url: 'https://print-test2.azurewebsites.net/terms',
         data,
       })
-      .then(response => next())
-      .catch(err => next(err));
+        .then((response) => next())
+        .catch((err) => next(err));
     }, (err) => {
       if (err) {
         return console.log(err);
