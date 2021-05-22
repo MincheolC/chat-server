@@ -1,5 +1,7 @@
 const pluralize = require('pluralize');
 const cache = require('./cache');
+const model = require('../model');
+const { get } = require('./cache');
 
 function parseWords(str) {
   const regexWords = /([a-zA-Z0-9]+)/g
@@ -28,20 +30,57 @@ function arrayToObj(terms) {
   return obj;
 }
 
-function updateCache(terms) {
-  const combinedWords = getCombinedWords(terms);
-
-  cache.set('terms', terms);
-  cache.set('fTerms', arrayToObj(terms));
-  cache.set('cfTerms', arrayToObj(combinedWords));
-
-  console.log(cache.get('terms'))
-  console.log(cache.get('fTerms'))
-  console.log(cache.get('cfTerms'))
+function updateCache(terms, callback) {
+  if (!terms) {
+    model.get((err, result) => {
+      if (err) {
+        return callback(err);
+      }
+      const combinedWords = getCombinedWords(result.rows);
+      cache.set('terms', result.rows);
+      cache.set('fTerms', arrayToObj(result.rows));
+      cache.set('cfTerms', combinedWords);
+      callback(null, result.rows);
+    });
+  } else {
+    const combinedWords = getCombinedWords(terms);
+    cache.set('terms', terms);
+    cache.set('fTerms', arrayToObj(terms));
+    cache.set('cfTerms', combinedWords);
+  }
 }
 
 function deleteCache(key) {
   cache.del(key);
+}
+
+function getDescriptions(str) {
+  const words = getSingularizedWords(str);
+  const descriptions = {};
+  const flatTerms = cache.get('fTerms');
+  const combinedTerms = cache.get('cfTerms');
+
+  words.forEach(word => {
+    const desc = flatTerms[word];
+    if (desc) {
+      descriptions[word] = desc;
+    }
+  });
+
+  combinedTerms.forEach(({ word, description}) => {
+    if (str.includes(word)) {
+      descriptions[word] = description;
+    }
+  })
+  return descriptions
+}
+
+function getDesc(str, callback) {
+  const terms = cache.get('terms');
+  updateCache(terms, () => {
+    const descriptions = getDescriptions(str);
+    callback(descriptions);
+  });
 }
 
 module.exports = {
@@ -52,4 +91,5 @@ module.exports = {
   arrayToObj,
   updateCache,
   deleteCache,
+  getDesc,
 };

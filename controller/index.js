@@ -8,12 +8,11 @@ function get(req, res) {
     return res.send(terms);
   }
 
-  return model.get((err, result) => {
+  return updateCache(terms, (err, result) => {
     if (err) {
       return res.status(500).end();
     }
-    updateCache(result.rows);
-    return res.send(result.rows);
+    return res.send(result);
   });
 }
 
