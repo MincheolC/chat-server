@@ -1,4 +1,10 @@
-const { parseWords, singularize, getSingularizedWords } = require('../util');
+const {
+  parseWords,
+  singularize,
+  getSingularizedWords,
+  getCombinedWords,
+  arrayToObj,
+} = require('../util');
 
 describe('parseWords', () => {
   it('valid', () => {
@@ -79,5 +85,60 @@ describe('getSingularizedWords', () => {
     strings.forEach((str, index) => {
       expect(getSingularizedWords(str)).toEqual(result[index]);
     });
+  });
+});
+
+describe('getCombinedWords', () => {
+  it('valid', () => {
+    const words = [
+      { word: 'Full-Stack' },
+      { word: 'markup language' },
+      { word: 'relational database' },
+      { word: 'Btn' },
+      { word: 'kick-off' },
+      { word: 'R&R' },
+      { word: 'F/U' },
+      { word: 'N/A' },
+      { word: 'Sans-serif' },
+      { word: '365' },
+      { word: 'house' },
+    ];
+    const result = [
+      { word: 'Full-Stack' },
+      { word: 'markup language' },
+      { word: 'relational database' },
+      { word: 'kick-off' },
+      { word: 'R&R' },
+      { word: 'F/U' },
+      { word: 'N/A' },
+      { word: 'Sans-serif' },
+    ];
+    expect(getCombinedWords(words)).toEqual(result);
+  });
+});
+
+describe('arrayToObj', () => {
+  it('valid', () => {
+    const words = [
+      { word: 'Full-Stack', description: 'a' },
+      { word: 'markup language', description: 'b' },
+      { word: 'Btn', description: 'c' },
+      { word: 'kick-off', description: 'd' },
+      { word: 'R&R', description: 'e' },
+      { word: 'F/U', description: 'f' },
+      { word: 'Sans-serif', description: 'g' },
+      { word: 'house', description: 'h' },
+    ];
+    const result = {
+      'Full-Stack': 'a',
+      'markup language': 'b',
+      'Btn': 'c',
+      'kick-off': 'd',
+      'R&R': 'e',
+      'F/U': 'f',
+      'Sans-serif': 'g',
+      'house': 'h',
+    };
+    expect(arrayToObj(words)).toEqual(result);
   });
 });
