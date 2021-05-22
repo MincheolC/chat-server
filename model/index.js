@@ -23,7 +23,13 @@ function get(callback) {
   pool.query(queryString, callback);
 }
 
+function update(data,callback) {
+  const queryString = 'UPDATE terms SET description = $1 WHERE id = $2 and word = $3';
+  pool.query(queryString, data, callback);
+}
+
 module.exports = {
   create,
   get,
+  update,
 }

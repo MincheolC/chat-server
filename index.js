@@ -19,6 +19,7 @@ app.get('/', (req, res) => res.send('Server is running'));
 // DB Test
 app.get('/terms', controller.get);
 app.post('/terms', controller.create);
+app.put('/terms',controller.update);
 
 // Chatroom
 let numUsers = 0;
